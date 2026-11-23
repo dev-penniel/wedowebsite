@@ -2207,44 +2207,6 @@
                 to respond to your enquiry.
               </p>
 
-              <!-- Navigation -->
-              <div
-                class="flex items-center justify-between gap-4 mt-10 pt-6 border-t border-gray-200"
-              >
-                <button
-                  type="button"
-                  x-show="step > 1"
-                  @click="previousStep()"
-                  class="button button-light"
-                >
-                  ← Back
-                </button>
-
-                <span x-show="step === 1"></span>
-
-                <button
-                  type="button"
-                  x-show="step < totalSteps"
-                  @click="nextStep()"
-                  class="button button-dark"
-                >
-                  Continue <span>↗</span>
-                </button>
-
-                <button
-                  type="submit"
-                  x-show="step === totalSteps"
-                  :disabled="sending"
-                  class="button button-dark form-submit"
-                >
-                  <span x-text="sending ? 'Submitting…' : 'Submit Enquiry'">
-                    Submit Enquiry
-                  </span>
-                  <span>↗</span>
-                </button>
-              </div>
-
-              <!-- Feedback -->
               <div
                 x-show="message"
                 x-transition:enter="transition ease-out duration-300"
@@ -2293,6 +2255,45 @@
 
                   <p x-text="message"></p>
                 </div>
+              </div>
+
+              <!-- Navigation -->
+              <div
+                class="flex items-center justify-between gap-4 mt-10 pt-6 border-t border-gray-200"
+              >
+                <!-- Feedback -->
+
+                <button
+                  type="button"
+                  x-show="step > 1"
+                  @click="previousStep()"
+                  class="button button-light"
+                >
+                  ← Back
+                </button>
+
+                <span x-show="step === 1"></span>
+
+                <button
+                  type="button"
+                  x-show="step < totalSteps"
+                  @click="nextStep()"
+                  class="button button-dark"
+                >
+                  Continue <span>↗</span>
+                </button>
+
+                <button
+                  type="submit"
+                  x-show="step === totalSteps"
+                  :disabled="sending"
+                  class="button button-dark form-submit"
+                >
+                  <span x-text="sending ? 'Submitting…' : 'Submit Enquiry'">
+                    Submit Enquiry
+                  </span>
+                  <span>↗</span>
+                </button>
               </div>
             </form>
           </div>
