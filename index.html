@@ -1039,6 +1039,21 @@
         font-size: 10px;
         line-height: 1.6;
       }
+
+      .form-note {
+        padding: 14px 16px;
+        border-radius: 6px;
+        background: #f3f4f6;
+        color: #333;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .form-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
       .footer-brand {
         width: 170px;
         height: auto;
@@ -1808,34 +1823,79 @@
             <form
               @submit.prevent="handleSubmit"
               x-data="{
-        step: 1,
-        totalSteps: 3,
-        sending: false,
+                step: 1,
+                totalSteps: 3,
+                sending: false,
+                message: '',
 
-        nextStep() {
-            const currentStep = this.$refs.form.querySelector(
-                `[data-step='${this.step}']`
-            );
+                nextStep() {
+                    const currentStep = this.$refs.form.querySelector(
+                        `[data-step='${this.step}']`
+                    );
 
-            const fields = currentStep.querySelectorAll(
-                'input[required], select[required], textarea[required]'
-            );
+                    const fields = currentStep.querySelectorAll(
+                        'input[required], select[required], textarea[required]'
+                    );
 
-            for (const field of fields) {
-                if (!field.reportValidity()) {
-                    return;
+                    for (const field of fields) {
+                        if (!field.reportValidity()) return;
+                    }
+
+                    if (this.step < this.totalSteps) {
+                        this.step++;
+                        this.message = '';
+                    }
+                },
+
+                previousStep() {
+                    if (this.step > 1) {
+                        this.step--;
+                        this.message = '';
+                    }
+                },
+
+                async handleSubmit() {
+                    const currentStep = this.$refs.form.querySelector(
+                        `[data-step='${this.step}']`
+                    );
+
+                    const fields = currentStep.querySelectorAll(
+                        'input[required], select[required], textarea[required]'
+                    );
+
+                    for (const field of fields) {
+                        if (!field.reportValidity()) return;
+                    }
+
+                    this.sending = true;
+                    this.message = '';
+
+                    try {
+                        const response = await fetch('send-inquiry.php', {
+                            method: 'POST',
+                            body: new FormData(this.$refs.form),
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        const result = await response.json();
+
+                        if (!response.ok || !result.success) {
+                            throw new Error(result.message || 'Unable to submit your enquiry.');
+                        }
+
+                        this.$refs.form.reset();
+                        this.step = 1;
+                        this.message = result.message;
+                        
+                    } catch (error) {
+                        this.message = error.message || 'Something went wrong. Please try again.';
+                    } finally {
+                        this.sending = false;
+                    }
                 }
-            }
-
-            if (this.step < this.totalSteps) {
-                this.step++;
-            }
-        },
-
-        previousStep() {
-            if (this.step > 1) this.step--;
-        }
-    }"
+            }"
               x-ref="form"
               novalidate
             >
@@ -2002,11 +2062,33 @@
                 <div class="grid grid-cols-1 gap-5">
                   <label class="field">
                     <span>Primary Growth Goal <b>*</b></span>
+
                     <select name="growth_goal" required>
                       <option value="" selected disabled>
                         Select your primary growth goal
                       </option>
-                      <!-- Connect existing growth goal options -->
+                      <option value="Increase brand awareness">
+                        Increase brand awareness
+                      </option>
+                      <option value="Generate more leads">
+                        Generate more leads
+                      </option>
+                      <option value="Increase sales and revenue">
+                        Increase sales and revenue
+                      </option>
+                      <option value="Improve online presence">
+                        Improve online presence
+                      </option>
+                      <option value="Launch a new product or service">
+                        Launch a new product or service
+                      </option>
+                      <option value="Improve customer engagement">
+                        Improve customer engagement
+                      </option>
+                      <option value="Expand into new markets">
+                        Expand into new markets
+                      </option>
+                      <option value="Other">Other</option>
                     </select>
                   </label>
 
@@ -2016,7 +2098,24 @@
                       <option value="" selected disabled>
                         Select your monthly marketing budget
                       </option>
-                      <!-- Connect existing budget options -->
+                      <option value="Below R5,000">Below R5,000</option>
+                      <option value="R5,000 – R10,000">R5,000 – R10,000</option>
+                      <option value="R10,000 – R20,000">
+                        R10,000 – R20,000
+                      </option>
+                      <option value="R20,000 – R35,000">
+                        R20,000 – R35,000
+                      </option>
+                      <option value="R35,000 – R50,000">
+                        R35,000 – R50,000
+                      </option>
+                      <option value="R50,000 – R100,000">
+                        R50,000 – R100,000
+                      </option>
+                      <option value="Above R100,000">Above R100,000</option>
+                      <option value="Not yet determined">
+                        Not yet determined
+                      </option>
                     </select>
                   </label>
 
