@@ -65,6 +65,172 @@
         color: #111;
         padding: 0.8rem 1rem;
       }
+      /* DESIGN ART */
+      .art-design {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 220px;
+          height: 220px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 50%;
+        }
+      }
+
+      .design-window {
+        width: 65%;
+        height: 65%;
+        padding: 12px;
+        background: #191919;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 5px;
+        transform: rotate(-6deg);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        position: relative;
+        z-index: 1;
+
+        .window-dots {
+          display: flex;
+          gap: 5px;
+          margin-bottom: 15px;
+
+          i {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+
+      .design-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 35px 35px;
+        gap: 7px;
+
+        i {
+          display: block;
+          background: rgba(255, 255, 255, 0.09);
+          border-radius: 2px;
+
+          &:first-child {
+            grid-column: span 2;
+            background: linear-gradient(
+              110deg,
+              rgba(255, 255, 255, 0.22),
+              rgba(255, 255, 255, 0.04)
+            );
+          }
+
+          &:nth-child(2) {
+            background: rgba(255, 255, 255, 0.14);
+          }
+        }
+      }
+
+      /* DEVELOPMENT ART */
+      .art-development {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          width: 180px;
+          height: 180px;
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          border-radius: 50%;
+        }
+
+        &::after {
+          width: 240px;
+          height: 240px;
+        }
+      }
+
+      .code-window {
+        position: relative;
+        z-index: 1;
+        width: 65%;
+        padding: 14px;
+        background: #191919;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 5px;
+        transform: rotate(5deg);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+        .window-dots {
+          display: flex;
+          gap: 5px;
+          margin-bottom: 18px;
+
+          i {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+
+      .code-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        padding-left: 5px;
+
+        i {
+          display: block;
+          height: 4px;
+          border-radius: 5px;
+          background: rgba(255, 255, 255, 0.2);
+
+          &:nth-child(1) {
+            width: 75%;
+            background: rgba(255, 255, 255, 0.55);
+          }
+
+          &:nth-child(2) {
+            width: 55%;
+            margin-left: 12px;
+          }
+
+          &:nth-child(3) {
+            width: 85%;
+            margin-left: 12px;
+          }
+
+          &:nth-child(4) {
+            width: 45%;
+            margin-left: 24px;
+          }
+        }
+      }
+
+      /* SHARED ART REFINEMENTS */
+      .art-design,
+      .art-development {
+        background: #202020;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .design-window,
+        .code-window {
+          width: 72%;
+        }
+      }
       .skip-link:focus {
         top: 1rem;
       }
@@ -1160,8 +1326,18 @@
           <a class="nav-link" href="#home">Home</a
           ><a class="nav-link" href="#services">Services</a>
           <a class="nav-link" href="#academy">Academy</a>
-          <a class="nav-link" href="#services">Domains</a>
-          <a class="nav-link" href="#services">Web Hosting</a>
+          <a
+            class="nav-link"
+            target="_Blank"
+            href="https://billing.wedocollective.co.za/order/config/preconfig/domains/"
+            >Domains</a
+          >
+          <a
+            class="nav-link"
+            target="_Blank"
+            href="https://billing.wedocollective.co.za/order/main/packages/cpanel-hosting/?group_id=2&currency=ZAR"
+            >Web Hosting</a
+          >
           <a class="nav-link" href="#about">About</a
           ><a class="nav-link" href="#contact">Contact</a>
         </nav>
@@ -1342,74 +1518,119 @@
               >Explore All <span>↗</span></a
             >
           </div>
+
           <div class="services-grid mt-16">
             <article class="service-card" data-reveal>
+              <div class="service-art art-hosting">
+                <div class="server-stack"><i></i><i></i><i></i></div>
+                <span class="art-label">01 / INFRASTRUCTURE</span>
+                <span class="art-arrow">↗</span>
+              </div>
+              <div class="service-meta">
+                <span>01</span><span>RELIABILITY</span>
+              </div>
+              <h3>Web Hosting</h3>
+              <p>
+                Secure, high-performance hosting solutions built for speed,
+                reliability, and the growth of your digital presence.
+              </p>
+            </article>
+
+            <article class="service-card" data-reveal data-delay="80">
+              <div class="service-art art-design">
+                <div class="design-window">
+                  <div class="window-dots"><i></i><i></i><i></i></div>
+                  <div class="design-layout"><i></i><i></i><i></i></div>
+                </div>
+                <span class="art-label">02 / DIGITAL EXPERIENCE</span>
+                <span class="art-arrow">↗</span>
+              </div>
+              <div class="service-meta">
+                <span>02</span><span>CREATIVITY</span>
+              </div>
+              <h3>Web Design</h3>
+              <p>
+                Beautiful, conversion-focused websites that communicate your
+                brand, engage audiences, and turn visitors into customers.
+              </p>
+            </article>
+
+            <article class="service-card" data-reveal data-delay="160">
               <div class="service-art art-paid">
                 <div class="art-bars">
                   <i></i><i></i><i></i><i></i><i></i><i></i>
                 </div>
-                <span class="art-label">01 / ACQUISITION</span
-                ><span class="art-arrow">↗</span>
+                <span class="art-label">03 / ACQUISITION</span>
+                <span class="art-arrow">↗</span>
               </div>
               <div class="service-meta">
-                <span>01</span><span>PERFORMANCE</span>
+                <span>03</span><span>PERFORMANCE</span>
               </div>
-              <h3>Paid Media</h3>
+              <h3>Paid Media & Marketing</h3>
               <p>
-                Targeted Google and Meta campaigns designed for high conversion
-                volume and scale.
+                Strategic Google and Meta campaigns, digital marketing, and
+                audience targeting designed to increase visibility and drive
+                measurable growth.
               </p>
             </article>
-            <article class="service-card" data-reveal data-delay="80">
-              <div class="service-art art-search">
-                <div class="search-ring"><span>GEO</span></div>
-                <span class="art-label">02 / DISCOVERY</span
-                ><span class="art-arrow">↗</span>
+
+            <article class="service-card" data-reveal data-delay="240">
+              <div class="service-art art-development">
+                <div class="code-window">
+                  <div class="window-dots"><i></i><i></i><i></i></div>
+                  <div class="code-lines"><i></i><i></i><i></i><i></i></div>
+                </div>
+                <span class="art-label">04 / ENGINEERING</span>
+                <span class="art-arrow">↗</span>
               </div>
               <div class="service-meta">
-                <span>02</span><span>VISIBILITY</span>
+                <span>04</span><span>INNOVATION</span>
+              </div>
+              <h3>Development</h3>
+              <p>
+                Custom web applications, business systems, and digital solutions
+                engineered to automate operations and solve complex challenges.
+              </p>
+            </article>
+
+            <article class="service-card" data-reveal data-delay="320">
+              <div class="service-art art-search">
+                <div class="search-ring"><span>GEO</span></div>
+                <span class="art-label">05 / DISCOVERY</span>
+                <span class="art-arrow">↗</span>
+              </div>
+              <div class="service-meta">
+                <span>05</span><span>VISIBILITY</span>
               </div>
               <h3>SEO & GEO Growth</h3>
               <p>
-                Search engine ranking strategies and generative engine
-                optimization for maximum organic reach.
+                Search engine optimization and generative engine strategies that
+                improve rankings, strengthen discoverability, and expand organic
+                reach.
               </p>
             </article>
-            <article class="service-card" data-reveal data-delay="160">
+
+            <article class="service-card" data-reveal data-delay="400">
               <div class="service-art art-commerce">
                 <div class="commerce-window">
                   <div class="window-dots"><i></i><i></i><i></i></div>
                   <div class="window-product"></div>
                   <div class="window-lines"><i></i><i></i><i></i></div>
                 </div>
-                <span class="art-label">03 / COMMERCE</span
-                ><span class="art-arrow">↗</span>
+                <span class="art-label">06 / COMMERCE</span>
+                <span class="art-arrow">↗</span>
               </div>
               <div class="service-meta">
-                <span>03</span><span>CONVERSION</span>
+                <span>06</span><span>CONVERSION</span>
               </div>
-              <h3>E-Commerce Scale</h3>
+              <h3>E-Commerce</h3>
               <p>
-                Full funnel checkout optimization and customer retention systems
-                for online storefronts.
-              </p>
-            </article>
-            <article class="service-card" data-reveal data-delay="240">
-              <div class="service-art art-hosting">
-                <div class="server-stack"><i></i><i></i><i></i></div>
-                <span class="art-label">04 / INFRASTRUCTURE</span
-                ><span class="art-arrow">↗</span>
-              </div>
-              <div class="service-meta">
-                <span>04</span><span>RELIABILITY</span>
-              </div>
-              <h3>Web Hosting</h3>
-              <p>
-                Ultra-fast cloud infrastructure, robust uptime monitoring, and
-                enterprise security management.
+                Powerful online storefronts, seamless shopping experiences, and
+                integrated payment solutions built to turn products into sales.
               </p>
             </article>
           </div>
+
           <a href="#audit" class="text-link mt-10 inline-flex md:hidden"
             >Explore All <span>↗</span></a
           >
