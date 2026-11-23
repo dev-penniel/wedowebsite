@@ -1805,120 +1805,279 @@
             data-delay="100"
             x-data="auditForm()"
           >
-            <form @submit.prevent="handleSubmit" novalidate>
-              <div class="form-grid">
-                <label class="field"
-                  ><span>First Name <b>*</b></span
-                  ><input
-                    type="text"
-                    name="first_name"
-                    autocomplete="given-name"
-                    placeholder="Your first name"
-                    required /></label
-                ><label class="field"
-                  ><span>Last Name <b>*</b></span
-                  ><input
-                    type="text"
-                    name="last_name"
-                    autocomplete="family-name"
-                    placeholder="Your last name"
-                    required /></label
-                ><label class="field"
-                  ><span>Work Email <b>*</b></span
-                  ><input
-                    type="email"
-                    name="email"
-                    autocomplete="email"
-                    placeholder="you@company.com"
-                    required /></label
-                ><label class="field"
-                  ><span>Phone Number</span
-                  ><input
-                    type="tel"
-                    name="phone"
-                    autocomplete="tel"
-                    placeholder="+27 00 000 0000" /></label
-                ><label class="field field-full"
-                  ><span>Website URL <b>*</b></span
-                  ><input
-                    type="url"
-                    name="website"
-                    placeholder="https://yourwebsite.com"
-                    required
-                /></label>
-                <label class="field field-full">
-                  <span>Social Media Links</span>
-                  <textarea
-                    name="social_links"
-                    rows="4"
-                    placeholder="Paste your social media profile links here (Instagram, Facebook, LinkedIn, TikTok, X, YouTube, etc.) — one link per line."
-                  ></textarea>
-                  <small>
-                    Add all relevant social media profile links in one place,
-                    with one link per line.
-                  </small>
-                </label>
+            <form
+              @submit.prevent="handleSubmit"
+              x-data="{
+        step: 1,
+        totalSteps: 3,
+        sending: false,
 
-                <label class="field field-full">
-                  <span>Top 5 Competitors</span>
-                  <textarea
-                    name="competitors"
-                    rows="4"
-                    placeholder="https://competitor1.com&#10;https://competitor2.com&#10;https://competitor3.com&#10;https://competitor4.com&#10;https://competitor5.com"
-                  ></textarea>
-                  <small>
-                    Share up to 5 competitor website URLs to help us understand
-                    your market and competitive landscape.
-                  </small>
-                </label>
-                <label class="field field-full"
-                  ><span>Primary Growth Goal <b>*</b></span
-                  ><select name="growth_goal" required>
-                    <option value="" selected disabled>
-                      Select your primary growth goal
-                    </option></select
-                  ><small
-                    >Growth goal choices need to be connected from the existing
-                    form configuration.</small
-                  ></label
-                >
-                <label class="field field-full"
-                  ><span>Monthly Marketing Budget <b>*</b></span
-                  ><select name="budget" required>
-                    <option value="" selected disabled>
-                      Select your monthly marketing budget
-                    </option></select
-                  ><small
-                    >Budget ranges need to be connected from the existing form
-                    configuration.</small
-                  ></label
-                >
-                <label class="field field-full"
-                  ><span>Current Biggest Growth Challenge</span
-                  ><textarea
-                    name="challenge"
-                    rows="3"
-                    placeholder="Tell us what's holding your growth back..."
-                  ></textarea>
-                </label>
+        nextStep() {
+            const currentStep = this.$refs.form.querySelector(
+                `[data-step='${this.step}']`
+            );
+
+            const fields = currentStep.querySelectorAll(
+                'input[required], select[required], textarea[required]'
+            );
+
+            for (const field of fields) {
+                if (!field.reportValidity()) {
+                    return;
+                }
+            }
+
+            if (this.step < this.totalSteps) {
+                this.step++;
+            }
+        },
+
+        previousStep() {
+            if (this.step > 1) this.step--;
+        }
+    }"
+              x-ref="form"
+              novalidate
+            >
+              <!-- Progress -->
+              <div class="mb-10">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-semibold text-gray-900">
+                    <span
+                      x-text="['About You', 'Digital Presence', 'Growth Goals'][step - 1]"
+                    ></span>
+                  </span>
+
+                  <span class="text-sm text-gray-500">
+                    Step <span x-text="step"></span> of 3
+                  </span>
+                </div>
+
+                <!-- <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    class="h-full bg-black rounded-full transition-all duration-500"
+                    :style="`width: ${(step / totalSteps) * 100}%`"
+                  ></div>
+                </div> -->
+
+                <div class="grid grid-cols-3 gap-2 mt-4">
+                  <template x-for="number in totalSteps" :key="number">
+                    <div
+                      class="h-1 rounded-full transition-colors"
+                      :class="step >= number ? 'bg-black' : 'bg-gray-200'"
+                    ></div>
+                  </template>
+                </div>
               </div>
-              <button
-                class="button button-dark form-submit"
-                type="submit"
-                :disabled="sending"
+
+              <!-- STEP 01: ABOUT YOU -->
+              <div x-show="step === 1" x-transition.opacity data-step="1">
+                <div class="mb-7">
+                  <h3 class="text-2xl font-semibold text-gray-900">
+                    Let's get to know you.
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-2">
+                    Start with your contact details and business website.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <label class="field">
+                    <span>First Name <b>*</b></span>
+                    <input
+                      type="text"
+                      name="first_name"
+                      autocomplete="given-name"
+                      placeholder="Your first name"
+                      required
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Last Name <b>*</b></span>
+                    <input
+                      type="text"
+                      name="last_name"
+                      autocomplete="family-name"
+                      placeholder="Your last name"
+                      required
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Work Email <b>*</b></span>
+                    <input
+                      type="email"
+                      name="email"
+                      autocomplete="email"
+                      placeholder="you@company.com"
+                      required
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Phone Number</span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      autocomplete="tel"
+                      placeholder="+27 00 000 0000"
+                    />
+                  </label>
+
+                  <label class="field md:col-span-2">
+                    <span>Website URL <b>*</b></span>
+                    <input
+                      type="url"
+                      name="website"
+                      placeholder="https://yourwebsite.com"
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <!-- STEP 02: DIGITAL PRESENCE -->
+              <div
+                x-show="step === 2"
+                x-transition.opacity
+                data-step="2"
+                x-cloak
               >
-                <span x-text="sending ? 'Checking details…' : 'Submit'"
-                  >Submit</span
-                ><span>↗</span>
-              </button>
+                <div class="mb-7">
+                  <h3 class="text-2xl font-semibold text-gray-900">
+                    Your digital presence.
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-2">
+                    Help us understand where your business exists online and who
+                    you're competing with.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5">
+                  <label class="field">
+                    <span>Social Media Links</span>
+                    <textarea
+                      name="social_links"
+                      rows="4"
+                      placeholder="Paste your social media profile links here. One link per line."
+                    ></textarea>
+                    <small>
+                      Instagram, Facebook, LinkedIn, TikTok, X, YouTube, etc.
+                    </small>
+                  </label>
+
+                  <label class="field">
+                    <span>Top 5 Competitors</span>
+                    <textarea
+                      name="competitors"
+                      rows="4"
+                      placeholder="https://competitor1.com&#10;https://competitor2.com&#10;https://competitor3.com&#10;https://competitor4.com&#10;https://competitor5.com"
+                    ></textarea>
+                    <small>
+                      Share up to 5 competitor website URLs to help us
+                      understand your competitive landscape.
+                    </small>
+                  </label>
+                </div>
+              </div>
+
+              <!-- STEP 03: GROWTH GOALS -->
+              <div
+                x-show="step === 3"
+                x-transition.opacity
+                data-step="3"
+                x-cloak
+              >
+                <div class="mb-7">
+                  <h3 class="text-2xl font-semibold text-gray-900">
+                    Where do you want to grow?
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-2">
+                    Tell us what you're looking to achieve and where you need
+                    support.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5">
+                  <label class="field">
+                    <span>Primary Growth Goal <b>*</b></span>
+                    <select name="growth_goal" required>
+                      <option value="" selected disabled>
+                        Select your primary growth goal
+                      </option>
+                      <!-- Connect existing growth goal options -->
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span>Monthly Marketing Budget <b>*</b></span>
+                    <select name="budget" required>
+                      <option value="" selected disabled>
+                        Select your monthly marketing budget
+                      </option>
+                      <!-- Connect existing budget options -->
+                    </select>
+                  </label>
+
+                  <label class="field">
+                    <span>Current Biggest Growth Challenge</span>
+                    <textarea
+                      name="challenge"
+                      rows="4"
+                      placeholder="Tell us what's holding your growth back..."
+                    ></textarea>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div
+                class="flex items-center justify-between gap-4 mt-10 pt-6 border-t border-gray-200"
+              >
+                <button
+                  type="button"
+                  x-show="step > 1"
+                  @click="previousStep()"
+                  class="button button-light"
+                >
+                  ← Back
+                </button>
+
+                <span x-show="step === 1"></span>
+
+                <button
+                  type="button"
+                  x-show="step < totalSteps"
+                  @click="nextStep()"
+                  class="button button-dark"
+                >
+                  Continue <span>↗</span>
+                </button>
+
+                <button
+                  type="submit"
+                  x-show="step === totalSteps"
+                  :disabled="sending"
+                  class="button button-dark form-submit"
+                >
+                  <span x-text="sending ? 'Submitting…' : 'Submit Enquiry'">
+                    Submit Enquiry
+                  </span>
+                  <span>↗</span>
+                </button>
+              </div>
+
+              <!-- Feedback -->
               <p
-                class="form-note"
+                class="form-note mt-4"
                 x-show="message"
                 x-text="message"
                 role="status"
                 aria-live="polite"
               ></p>
-              <p class="form-legal">
+
+              <p class="form-legal mt-5">
                 Fields marked * are required. Your information will only be used
                 to respond to your enquiry.
               </p>
@@ -1968,7 +2127,7 @@
             <a href="#services">Web Design</a
             ><a href="#services">Paid Media + Marketing</a
             ><a href="#services">Development</a
-            ><a href="#services">SEO + GEO Growth</a> >
+            ><a href="#services">SEO + GEO Growth</a>
             <a href="#services">E-Commerce</a>
           </div>
           <div class="footer-column">
@@ -2001,13 +2160,8 @@
         >
           <span>© 2025 WeDo Agency Inc. All rights reserved.</span>
           <div class="flex flex-wrap gap-x-7 gap-y-3">
-            <span>Privacy Policy <small>(destination to confirm)</small></span
-            ><span
-              >Terms & Conditions <small>(destination to confirm)</small></span
-            ><span
-              >Cookie Settings
-              <small>(consent integration required)</small></span
-            >
+            <span>Privacy Policy</span><span>Terms & Conditions</span
+            ><span>Cookie Settings</span>
           </div>
           <a href="#home" class="back-top">BACK TO TOP ↑</a>
         </div>
