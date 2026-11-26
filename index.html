@@ -18,6 +18,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -382,6 +386,29 @@
         border-radius: 50%;
         background: var(--orange);
         display: inline-block;
+      }
+      .footer-socials {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .footer-socials a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 18px;
+        text-decoration: none;
+        transition:
+          color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .footer-socials a:hover {
+        color: #f58220;
+        transform: translateY(-3px);
       }
       .hero-title {
         max-width: 790px;
@@ -2804,10 +2831,38 @@
             <h3>Contact</h3>
             <a href="mailto:info@wedocollective.co.za"
               >info@wedocollective.co.za</a
-            ><a href="tel:+27620355158">+27 62 035 5158</a
-            ><span class="footer-location"
+            >
+            <a href="tel:+27620355158">+27 62 035 5158</a>
+            <span class="footer-location"
               >South Africa · Working worldwide</span
             >
+
+            <div class="footer-socials">
+              <a
+                href="https://www.facebook.com/profile.php?id=61596043059388"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/wedo.cr8/?__d=1%2F"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="YOUR_TIKTOK_URL"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+              >
+                <i class="fab fa-tiktok"></i>
+              </a>
+            </div>
           </div>
         </div>
         <div
